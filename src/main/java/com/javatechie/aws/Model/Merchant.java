@@ -1,5 +1,6 @@
 package com.javatechie.aws.Model;
 
+import com.javatechie.aws.common.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,20 +14,19 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "Customer")
+@Table(name = "Merchant")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Customer {
+public class Merchant {
     @Id
     @GeneratedValue
     private int id;
     @CreatedDate
     private Date createdAt = new Date();
     private String name;
+    private String website;
     private int contactId;
-    private List<String> addresses;
-
 
     public int getId() {
         return id;
@@ -48,19 +48,19 @@ public class Customer {
         this.name = name;
     }
 
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
     public int getContactId() {
         return contactId;
     }
 
     public void setContactId(int contactId) {
         this.contactId = contactId;
-    }
-
-    public List<String> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(List<String> addresses) {
-        this.addresses = addresses;
     }
 }

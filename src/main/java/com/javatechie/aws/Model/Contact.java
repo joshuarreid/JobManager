@@ -10,22 +10,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
-import java.util.List;
 
 @Entity
-@Table(name = "Customer")
+@Table(name = "Contact")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Customer {
+public class Contact {
     @Id
     @GeneratedValue
     private int id;
     @CreatedDate
     private Date createdAt = new Date();
     private String name;
-    private int contactId;
-    private List<String> addresses;
+    private String jobTitle;
+    private String email;
+    private int phone;
+    private int companyId;
 
 
     public int getId() {
@@ -48,19 +49,35 @@ public class Customer {
         this.name = name;
     }
 
-    public int getContactId() {
-        return contactId;
+    public String getJobTitle() {
+        return jobTitle;
     }
 
-    public void setContactId(int contactId) {
-        this.contactId = contactId;
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
     }
 
-    public List<String> getAddresses() {
-        return addresses;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAddresses(List<String> addresses) {
-        this.addresses = addresses;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getPhone() {
+        return phone;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 }

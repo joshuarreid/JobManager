@@ -1,5 +1,6 @@
 package com.javatechie.aws.Model;
 
+import com.javatechie.aws.common.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,31 +14,19 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "Customer")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Customer {
+public class Item {
     @Id
     @GeneratedValue
     private int id;
-    @CreatedDate
-    private Date createdAt = new Date();
     private String name;
-    private int contactId;
-    private List<String> addresses;
-
+    private int quantity;
+    private int cost;
 
     public int getId() {
         return id;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
     }
 
     public String getName() {
@@ -48,19 +37,19 @@ public class Customer {
         this.name = name;
     }
 
-    public int getContactId() {
-        return contactId;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setContactId(int contactId) {
-        this.contactId = contactId;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
-    public List<String> getAddresses() {
-        return addresses;
+    public int getCost() {
+        return cost;
     }
 
-    public void setAddresses(List<String> addresses) {
-        this.addresses = addresses;
+    public void setCost(int cost) {
+        this.cost = cost;
     }
 }

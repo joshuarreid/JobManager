@@ -31,8 +31,11 @@ public class JobService {
 
     public Job updateJob(@PathVariable int id, Job updatedJob) throws Exception {
         Job job = jobRepository.findById(id).orElseThrow(() -> new Exception("Job not found"));
-        job.setCompany(updatedJob.getCompany());
-        job.setCustomer(updatedJob.getCustomer());
+        job.setName(updatedJob.getName());
+        job.setCustomerId(updatedJob.getCustomerId());
+        job.setOrderIds(updatedJob.getOrderIds());
+        job.setEstimatedCost(updatedJob.getEstimatedCost());
+        job.setTotalCost(updatedJob.getTotalCost());
         job.setStatus(updatedJob.getStatus());
         jobRepository.save(job);
         return job;

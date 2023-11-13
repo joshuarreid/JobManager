@@ -4,11 +4,14 @@ import com.javatechie.aws.common.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "Job")
@@ -19,24 +22,66 @@ public class Job {
     @Id
     @GeneratedValue
     private int id;
-    private String company;
-    private String customer;
+    @CreatedDate
+    private Date createdAt = new Date();
+    private String name;
+    private int customerId;
+    private List<Integer> orderIds;
+    private int estimatedCost;
+    private int totalCost;
     private Status status;
 
-    public String getCompany() {
-        return company;
+
+    public int getId() {
+        return id;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public String getCustomer() {
-        return customer;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public void setCustomer(String customer) {
-        this.customer = customer;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public List<Integer> getOrderIds() {
+        return orderIds;
+    }
+
+    public void setOrderIds(List<Integer> orderIds) {
+        this.orderIds = orderIds;
+    }
+
+    public int getEstimatedCost() {
+        return estimatedCost;
+    }
+
+    public void setEstimatedCost(int estimatedCost) {
+        this.estimatedCost = estimatedCost;
+    }
+
+    public int getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(int totalCost) {
+        this.totalCost = totalCost;
     }
 
     public Status getStatus() {
