@@ -1,29 +1,32 @@
 package com.javatechie.aws.Model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "Company")
+@Table(name = "companies")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Company {
     @Id
-    @GeneratedValue
-    private int id;
-    private String Name;
-    private String address;
-    private List<Integer> contactIds;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "companies_generator")
+    private Long id;
 
-    public int getId() {
+    @Column(name = "name")
+    private String Name;
+
+    @Column(name = "address")
+    private String address;
+
+
+
+    public Long getId() {
         return id;
     }
 
@@ -43,11 +46,5 @@ public class Company {
         this.address = address;
     }
 
-    public List<Integer> getContactIds() {
-        return contactIds;
-    }
 
-    public void setContactIds(List<Integer> contactIds) {
-        this.contactIds = contactIds;
-    }
 }

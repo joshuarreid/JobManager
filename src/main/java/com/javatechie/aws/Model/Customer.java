@@ -1,34 +1,40 @@
 package com.javatechie.aws.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "Customer")
+@Table(name = "customers")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Customer {
     @Id
-    @GeneratedValue
-    private int id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customers_generator")
+    private Long id;
+
     @CreatedDate
+    @Column(name = "createdAt")
     private Date createdAt = new Date();
+
+    @Column(name = "name")
     private String name;
-    private int contactId;
+
+    @Column(name = "addresses")
+    @ElementCollection
     private List<String> addresses;
 
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -48,14 +54,6 @@ public class Customer {
         this.name = name;
     }
 
-    public int getContactId() {
-        return contactId;
-    }
-
-    public void setContactId(int contactId) {
-        this.contactId = contactId;
-    }
-
     public List<String> getAddresses() {
         return addresses;
     }
@@ -63,4 +61,5 @@ public class Customer {
     public void setAddresses(List<String> addresses) {
         this.addresses = addresses;
     }
+
 }

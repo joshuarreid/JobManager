@@ -1,7 +1,15 @@
 package com.javatechie.aws.DAO;
 
+import com.javatechie.aws.Model.Contact;
 import com.javatechie.aws.Model.Customer;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-public interface CustomerRepository extends JpaRepository<Customer,Integer> {
+import java.util.List;
+
+
+@Repository
+public interface CustomerRepository extends CrudRepository<Customer,Long> {
+
 }

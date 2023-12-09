@@ -1,35 +1,61 @@
 package com.javatechie.aws.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "Contact")
+@Table(name = "contacts")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Contact {
     @Id
-    @GeneratedValue
-    private int id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contacts_generator")
+    private Long id;
+
     @CreatedDate
+    @Column(name = "createdAt")
     private Date createdAt = new Date();
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "jobTitle")
     private String jobTitle;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "phone")
     private int phone;
-    private int companyId;
 
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "company_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Company company;
 
-    public int getId() {
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "customer_id", nullable = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Customer customer;
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Long getId() {
         return id;
     }
 
@@ -73,11 +99,11 @@ public class Contact {
         this.phone = phone;
     }
 
-    public int getCompanyId() {
-        return companyId;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setCompanyId(int companyId) {
-        this.companyId = companyId;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }
