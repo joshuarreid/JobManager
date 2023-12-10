@@ -1,10 +1,7 @@
 package com.javatechie.aws.Controller;
 
-import com.amazonaws.services.secretsmanager.model.ResourceNotFoundException;
-import com.javatechie.aws.DAO.ContactRepository;
-import com.javatechie.aws.DAO.CustomerRepository;
-import com.javatechie.aws.Model.Contact;
 import com.javatechie.aws.Model.Customer;
+import com.javatechie.aws.Service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,43 +13,33 @@ import java.util.List;
 @RequestMapping("/api")
 public class CustomerController {
     @Autowired
-    CustomerRepository customerRepository;
+    CustomerService customerService;
 
-    @Autowired
-    ContactRepository contactRepository;
+    @GetMapping("/customer")
+    public ResponseEntity<List<Customer>> getAllCustomers() {
+        return customerService.getAllCustomers();
+    }
 
 
     @GetMapping("/customer/{id}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable(value = "id") Long id) {
-        Customer customer = customerRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Not found Customer with id = " + id));
-
-        return new ResponseEntity<>(customer, HttpStatus.OK);
+        return customerService.getCustomerById(id);
     }
 
     @PostMapping("/customer")
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer newCustomer) {
-        Customer customer = customerRepository.save(newCustomer);
-        return new ResponseEntity<>(customer, HttpStatus.CREATED);
+        return customerService.createCustomer(newCustomer);
     }
 
     @PutMapping("/customer/{id}")
     public ResponseEntity<Customer> updateCustomer(@PathVariable("id") long id, @RequestBody Customer updatedCustomer) {
-        Customer customer = customerRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("CustomerId " + id + "not found"));
-
-        customer.setAddresses(updatedCustomer.getAddresses());
-        customer.setName(updatedCustomer.getName());
-        customer.setCreatedAt(updatedCustomer.getCreatedAt());
-        return new ResponseEntity<>(customerRepository.save(customer), HttpStatus.OK);
+        return customerService.updateCustomer(id, updatedCustomer);
     }
 
 
     @DeleteMapping("/customer/{id}")
     public ResponseEntity<HttpStatus> deleteCustomer(@PathVariable("id") long id) {
-        customerRepository.deleteById(id);
-
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return customerService.deleteCustomer(id);
     }
 
 }
