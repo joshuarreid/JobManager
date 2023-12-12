@@ -51,12 +51,16 @@ public class CustomerService {
 
         } catch (Exception e) {
             logger.error(e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     public ResponseEntity<Customer> createCustomer(Customer newCustomer) {
         try {
+            if (newCustomer.getName() == null) {
+                logger.info("name is null");
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
             Customer customer = customerRepository.save(newCustomer);
             logger.info(customer);
             logger.info("Customer Successfully Created");
@@ -68,6 +72,16 @@ public class CustomerService {
     }
 
     public ResponseEntity<Customer> updateCustomer(long id, Customer updatedCustomer) {
+        try {
+            if (!customerRepository.existsById(id)) {
+                throw new ResourceNotFoundException("Customer does not exist: id=" + id);
+            }
+        } catch (Exception e) {
+            logger.error(e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+
         try {
             Customer customer = customerRepository.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException("Customer does not exist: id=" + id));
@@ -89,9 +103,19 @@ public class CustomerService {
 
     public ResponseEntity<HttpStatus> deleteCustomer(long id) {
         try {
+            if (!customerRepository.existsById(id)) {
+                throw new ResourceNotFoundException("Customer does not exist: id=" + id);
+            }
+        } catch (Exception e) {
+            logger.error(e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+
+        try {
             customerRepository.deleteById(id);
             logger.info("Customer Successfully Deleted");
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
