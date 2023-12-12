@@ -10,6 +10,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "jobs")
@@ -37,6 +38,10 @@ public class Job {
     @Column(name = "status")
     private Status status;
 
+    @Column(name = "files")
+    @ElementCollection
+    private List<String> files;
+
     @Column(name = "completedAt")
     private Date completedAt = new Date();
 
@@ -46,11 +51,17 @@ public class Job {
     private Customer customer;
 
 
+    public List<String> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<String> files) {
+        this.files = files;
+    }
 
     public Long getId() {
         return id;
     }
-
 
     public Date getCreatedAt() {
         return createdAt;

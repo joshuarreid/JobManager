@@ -46,13 +46,28 @@ public class Contractor {
     @Column(name = "status")
     private Status status;
 
+    @Column(name = "image")
+    private String image;
+
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "labor_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Labor labor;
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -117,5 +132,9 @@ public class Contractor {
 
     public void setLabor(Labor labor) {
         this.labor = labor;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
     }
 }

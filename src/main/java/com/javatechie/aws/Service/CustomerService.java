@@ -74,6 +74,7 @@ public class CustomerService {
 
             customer.setAddresses(updatedCustomer.getAddresses());
             customer.setName(updatedCustomer.getName());
+            customer.setImage(updatedCustomer.getImage());
             customer = customerRepository.save(customer);
             logger.info(customer);
             logger.info("Customer Successfully Updated");

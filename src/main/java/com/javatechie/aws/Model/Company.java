@@ -24,9 +24,20 @@ public class Company {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "image")
+    private String image;
+
     @CreatedDate
     @Column(name = "createdAt", nullable = false)
     private Date createdAt = new Date();
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public Date getCreatedAt() {
         return createdAt;

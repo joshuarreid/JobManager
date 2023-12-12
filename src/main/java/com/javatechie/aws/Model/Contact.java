@@ -38,6 +38,9 @@ public class Contact {
     @Column(name = "phone")
     private int phone;
 
+    @Column(name = "image")
+    private String image;
+
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "company_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -47,6 +50,14 @@ public class Contact {
     @JoinColumn(name = "customer_id", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Customer customer;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public Customer getCustomer() {
         return customer;

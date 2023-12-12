@@ -92,6 +92,7 @@ public class CompanyService
                     .orElseThrow(() -> new ResourceNotFoundException("Company does not exist: id=" + id));
             company.setAddress(updatedCompany.getAddress());
             company.setName(updatedCompany.getName());
+            company.setImage(updatedCompany.getImage());
             company = companyRepository.save(company);
             logger.info(company);
             logger.info("Company Successfully Updated");

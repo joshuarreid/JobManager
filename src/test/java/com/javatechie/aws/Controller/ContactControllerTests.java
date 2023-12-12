@@ -42,6 +42,7 @@ public class ContactControllerTests {
         Company mockCompany = new Company();
         mockCompany.setName("Mock Company");
         mockCompany.setAddress("1234 Mock Avenue");
+        mockCompany.setImage("http://photo.com");
         mockCompany.setId(1L);
         this.mockCompany = mockCompany;
 
@@ -50,6 +51,7 @@ public class ContactControllerTests {
         mockContact.setName("John Mocker");
         mockContact.setJobTitle("Head Mock Advisor");
         mockContact.setCompany(this.mockCompany);
+        mockContact.setImage("http://photo.com");
         mockContact.setId(1L);
         this.mockContact = mockContact;
 
@@ -59,6 +61,7 @@ public class ContactControllerTests {
         Customer mockCustomer = new Customer();
         mockCustomer.setName("Mock Customer 1");
         mockCustomer.setAddresses(addresses);
+        mockCustomer.setImage("http://photo.com");
         mockCustomer.setId(1L);
         this.mockCustomer = mockCustomer;
 
@@ -81,6 +84,7 @@ public class ContactControllerTests {
         Assert.assertEquals(body.get(0).getCompany(), this.mockContact.getCompany());
         Assert.assertEquals(body.get(0).getName(), this.mockContact.getName());
         Assert.assertEquals(body.get(0).getJobTitle(), this.mockContact.getJobTitle());
+        Assert.assertEquals(body.get(0).getImage(), this.mockContact.getImage());
         Assert.assertEquals(result.getStatusCode(), HttpStatus.OK);
 
     }
@@ -99,6 +103,7 @@ public class ContactControllerTests {
         Assert.assertEquals(body.get(0).getCompany(), this.mockContact.getCompany());
         Assert.assertEquals(body.get(0).getName(), this.mockContact.getName());
         Assert.assertEquals(body.get(0).getJobTitle(), this.mockContact.getJobTitle());
+        Assert.assertEquals(body.get(0).getImage(), this.mockContact.getImage());
         Assert.assertEquals(result.getStatusCode(), HttpStatus.OK);
 
     }
@@ -117,6 +122,7 @@ public class ContactControllerTests {
         Assert.assertEquals(body.get(0).getCompany(), this.mockContact.getCompany());
         Assert.assertEquals(body.get(0).getName(), this.mockContact.getName());
         Assert.assertEquals(body.get(0).getJobTitle(), this.mockContact.getJobTitle());
+        Assert.assertEquals(body.get(0).getImage(), this.mockContact.getImage());
         Assert.assertEquals(result.getStatusCode(), HttpStatus.OK);
 
     }
@@ -134,6 +140,7 @@ public class ContactControllerTests {
         Assert.assertEquals(result.getBody().getCompany(), this.mockContact.getCompany());
         Assert.assertEquals(result.getBody().getName(), this.mockContact.getName());
         Assert.assertEquals(result.getBody().getJobTitle(), this.mockContact.getJobTitle());
+        Assert.assertEquals(result.getBody().getImage(), this.mockContact.getImage());
         Assert.assertEquals(result.getStatusCode(), HttpStatus.OK);
 
     }
@@ -154,6 +161,7 @@ public class ContactControllerTests {
         Assert.assertEquals(result.getBody().getCompany(), this.mockContact.getCompany());
         Assert.assertEquals(result.getBody().getName(), this.mockContact.getName());
         Assert.assertEquals(result.getBody().getJobTitle(), this.mockContact.getJobTitle());
+        Assert.assertEquals(result.getBody().getImage(), this.mockContact.getImage());
         Assert.assertEquals(result.getStatusCode(), HttpStatus.OK);
     }
 
@@ -168,6 +176,7 @@ public class ContactControllerTests {
         Assert.assertEquals(result.getBody().getCustomer(), this.mockContactWithCustomer.getCustomer());
         Assert.assertEquals(result.getBody().getName(), this.mockContactWithCustomer.getName());
         Assert.assertEquals(result.getBody().getJobTitle(), this.mockContactWithCustomer.getJobTitle());
+        Assert.assertEquals(result.getBody().getImage(), this.mockContactWithCustomer.getImage());
         Assert.assertEquals(result.getStatusCode(), HttpStatus.OK);
 
     }
@@ -185,6 +194,7 @@ public class ContactControllerTests {
         Assert.assertEquals(result.getBody().getCompany(), this.mockContact.getCompany());
         Assert.assertEquals(result.getBody().getName(), this.mockContact.getName());
         Assert.assertEquals(result.getBody().getJobTitle(), this.mockContact.getJobTitle());
+        Assert.assertEquals(result.getBody().getImage(), this.mockContact.getImage());
         Assert.assertEquals(result.getStatusCode(), HttpStatus.OK);
 
     }

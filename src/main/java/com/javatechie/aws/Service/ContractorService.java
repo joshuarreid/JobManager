@@ -99,6 +99,7 @@ public class ContractorService
             contractor.setHoursWorked(updatedContractor.getHoursWorked());
             contractor.setStatus(updatedContractor.getStatus());
             contractor.setLabor(updatedContractor.getLabor());
+            contractor.setImage(updatedContractor.getImage());
             contractor = contractorRepository.save(contractor);
             logger.info(contractor);
             logger.info("Contractor Successfully Updated");

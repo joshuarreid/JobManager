@@ -88,6 +88,7 @@ public class ContactService
             contact.setEmail(updatedContact.getEmail());
             contact.setJobTitle(updatedContact.getJobTitle());
             contact.setName(updatedContact.getName());
+            contact.setImage(updatedContact.getImage());
             contact = contactRepository.save(contact);
             logger.info(contact);
             logger.info("Contact Successfully Updated");

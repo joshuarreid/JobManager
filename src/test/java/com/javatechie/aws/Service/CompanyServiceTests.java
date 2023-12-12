@@ -17,9 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 public class CompanyServiceTests {
@@ -40,12 +38,14 @@ public class CompanyServiceTests {
         Company mockResponseCompany = new Company();
         mockResponseCompany.setName("Mock Company");
         mockResponseCompany.setAddress("1234 Mock Avenue");
+        mockResponseCompany.setImage("http://photo.com");
         mockResponseCompany.setId(1L);
         this.mockResponseCompany = mockResponseCompany;
 
         Company mockResponseCompany2 = new Company();
         mockResponseCompany2.setName("Mock Company 2");
         mockResponseCompany2.setAddress("2345 Mock St");
+        mockResponseCompany2.setImage("http://photo.com");
         mockResponseCompany2.setId(1L);
         this.mockResponseCompany2 = mockResponseCompany2;
     }
@@ -62,6 +62,7 @@ public class CompanyServiceTests {
         Assert.assertEquals(result.getBody().get(0).getId(), this.mockResponseCompany.getId());
         Assert.assertEquals(result.getBody().get(0).getAddress(), this.mockResponseCompany.getAddress());
         Assert.assertEquals(result.getBody().get(0).getName(), this.mockResponseCompany.getName());
+        Assert.assertEquals(result.getBody().get(0).getImage(), this.mockResponseCompany.getImage());
         Assert.assertEquals(result.getStatusCode(), HttpStatus.OK);
 
     }
@@ -85,6 +86,7 @@ public class CompanyServiceTests {
         Assert.assertEquals(result.getBody().getId(), this.mockResponseCompany.getId());
         Assert.assertEquals(result.getBody().getAddress(), this.mockResponseCompany.getAddress());
         Assert.assertEquals(result.getBody().getName(), this.mockResponseCompany.getName());
+        Assert.assertEquals(result.getBody().getImage(), this.mockResponseCompany.getImage());
         Assert.assertEquals(result.getStatusCode(), HttpStatus.OK);
 
     }
@@ -102,6 +104,7 @@ public class CompanyServiceTests {
         Company mockRequestCompany = new Company();
         mockRequestCompany.setName("Mock Company");
         mockRequestCompany.setAddress("1234 Mock Avenue");
+        mockRequestCompany.setImage("http://photo.com");
         when(companyRepository.save(mockRequestCompany)).thenReturn(this.mockResponseCompany);
 
 
@@ -109,6 +112,7 @@ public class CompanyServiceTests {
         Assert.assertEquals(result.getBody().getId(), this.mockResponseCompany.getId());
         Assert.assertEquals(result.getBody().getAddress(), this.mockResponseCompany.getAddress());
         Assert.assertEquals(result.getBody().getName(), this.mockResponseCompany.getName());
+        Assert.assertEquals(result.getBody().getImage(), this.mockResponseCompany.getImage());
         Assert.assertEquals(result.getStatusCode(), HttpStatus.CREATED);
 
     }
@@ -124,6 +128,7 @@ public class CompanyServiceTests {
         Assert.assertEquals(result.getBody().getId(), this.mockResponseCompany2.getId());
         Assert.assertEquals(result.getBody().getAddress(), this.mockResponseCompany2.getAddress());
         Assert.assertEquals(result.getBody().getName(), this.mockResponseCompany2.getName());
+        Assert.assertEquals(result.getBody().getImage(), this.mockResponseCompany2.getImage());
         Assert.assertEquals(result.getStatusCode(), HttpStatus.OK);
 
     }

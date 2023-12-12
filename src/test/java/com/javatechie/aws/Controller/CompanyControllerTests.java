@@ -30,6 +30,7 @@ public class CompanyControllerTests {
         Company mockResponseCompany = new Company();
         mockResponseCompany.setName("Mock Company");
         mockResponseCompany.setAddress("1234 Mock Avenue");
+        mockResponseCompany.setImage("http://photo.com");
         mockResponseCompany.setId(1L);
         this.mockResponseCompany = mockResponseCompany;
     }
@@ -47,6 +48,7 @@ public class CompanyControllerTests {
         Assert.assertEquals(result.getBody().get(0).getId(), this.mockResponseCompany.getId());
         Assert.assertEquals(result.getBody().get(0).getAddress(), this.mockResponseCompany.getAddress());
         Assert.assertEquals(result.getBody().get(0).getName(), this.mockResponseCompany.getName());
+        Assert.assertEquals(result.getBody().get(0).getImage(), this.mockResponseCompany.getImage());
         Assert.assertEquals(result.getStatusCode(), HttpStatus.OK);
 
     }
@@ -63,6 +65,7 @@ public class CompanyControllerTests {
         Assert.assertEquals(result.getBody().getId(), this.mockResponseCompany.getId());
         Assert.assertEquals(result.getBody().getAddress(), this.mockResponseCompany.getAddress());
         Assert.assertEquals(result.getBody().getName(), this.mockResponseCompany.getName());
+        Assert.assertEquals(result.getBody().getImage(), this.mockResponseCompany.getImage());
         Assert.assertEquals(result.getStatusCode(), HttpStatus.OK);
 
     }
@@ -80,6 +83,7 @@ public class CompanyControllerTests {
         Assert.assertEquals(result.getBody().getId(), this.mockResponseCompany.getId());
         Assert.assertEquals(result.getBody().getAddress(), this.mockResponseCompany.getAddress());
         Assert.assertEquals(result.getBody().getName(), this.mockResponseCompany.getName());
+        Assert.assertEquals(result.getBody().getImage(), this.mockResponseCompany.getImage());
         Assert.assertEquals(result.getStatusCode(), HttpStatus.OK);
 
     }
@@ -98,6 +102,7 @@ public class CompanyControllerTests {
         Assert.assertEquals(result.getBody().getId(), this.mockResponseCompany.getId());
         Assert.assertEquals(result.getBody().getAddress(), this.mockResponseCompany.getAddress());
         Assert.assertEquals(result.getBody().getName(), this.mockResponseCompany.getName());
+        Assert.assertEquals(result.getBody().getImage(), this.mockResponseCompany.getImage());
         Assert.assertEquals(result.getStatusCode(), HttpStatus.OK);
 
     }

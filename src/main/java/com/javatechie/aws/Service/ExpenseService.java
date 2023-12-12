@@ -91,6 +91,7 @@ public class ExpenseService {
             expense.setDate(updatedExpense.getDate());
             expense.setType(updatedExpense.getType());
             expense.setJob(updatedExpense.getJob());
+            expense.setImage(updatedExpense.getImage());
             expenseRepository.save(expense);
             logger.info(expense);
             logger.info("Expense Successfully Updated");

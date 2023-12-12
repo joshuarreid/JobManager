@@ -38,10 +38,21 @@ public class Expense {
     @Column(name = "date")
     private Date date = new Date();
 
+    @Column(name = "image")
+    private String image;
+
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "job_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Job job;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public Long getId() {
         return id;
