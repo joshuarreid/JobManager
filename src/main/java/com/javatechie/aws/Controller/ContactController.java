@@ -61,7 +61,7 @@ public class ContactController {
 
 
     @DeleteMapping("/company/{companyId}/contacts")
-    public ResponseEntity<List<Contact>> deleteAllContactsOfCompany(@PathVariable(value = "companyId") Long companyId) {
+    public ResponseEntity<HttpStatus> deleteAllContactsOfCompany(@PathVariable(value = "companyId") Long companyId) {
         logger.info("Deleting All Contacts for CompanyId: " + companyId);
         return contactService.deleteAllContactsOfCompany(companyId);
     }

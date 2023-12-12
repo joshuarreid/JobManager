@@ -22,10 +22,11 @@ public class Contact {
     private Long id;
 
     @CreatedDate
-    @Column(name = "createdAt")
+    @Column(name = "createdAt", nullable = false)
     private Date createdAt = new Date();
 
-    @Column(name = "name")
+
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "jobTitle")
@@ -57,6 +58,10 @@ public class Contact {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Date getCreatedAt() {

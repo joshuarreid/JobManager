@@ -23,10 +23,10 @@ public class Expense {
     private Long id;
 
     @CreatedDate
-    @Column(name = "createdAt")
+    @Column(name = "createdAt", nullable = false)
     private Date createdAt = new Date();
 
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     private String description;
 
     @Column(name = "cost")

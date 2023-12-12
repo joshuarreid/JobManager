@@ -62,12 +62,23 @@ public class ContactService
             return new ResponseEntity<>(contact, HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
 
     public ResponseEntity<Contact> updateContact(long id, Contact updatedContact) {
+        try {
+            if (!contactRepository.existsById(id)) {
+                throw new ResourceNotFoundException("Contact does not exist: id=" + id);
+            }
+        } catch (Exception e) {
+            logger.error(e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        }
+
+
         try {
             Contact contact = contactRepository.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException("Contact does not exist: id=" + id));
@@ -90,9 +101,20 @@ public class ContactService
 
     public ResponseEntity<HttpStatus> deleteContact(long id) {
         try {
+            if (!contactRepository.existsById(id)) {
+                throw new ResourceNotFoundException("Contact does not exist: id=" + id);
+            }
+        } catch (Exception e) {
+            logger.error(e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        }
+
+
+        try {
             contactRepository.deleteById(id);
             logger.info("Contact Successfully Deleted");
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -105,6 +127,14 @@ public class ContactService
             if (!companyRepository.existsById(companyId)) {
                 throw new ResourceNotFoundException("Company does not exist: id=" + companyId);
             }
+        } catch (Exception e) {
+            logger.error(e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        }
+
+
+        try {
             List<Contact> contacts = new ArrayList<>();
             contacts = contactRepository.findByCompanyId(companyId);
             if (contacts.isEmpty()) {
@@ -133,21 +163,28 @@ public class ContactService
             return new ResponseEntity<>(contact, HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
     }
 
 
 
-    public ResponseEntity<List<Contact>> deleteAllContactsOfCompany(Long companyId) {
+    public ResponseEntity<HttpStatus> deleteAllContactsOfCompany(Long companyId) {
         try {
             if (!companyRepository.existsById(companyId)) {
                 throw new ResourceNotFoundException("Company does not exist: id=" + companyId);
             }
+        } catch (Exception e) {
+            logger.error(e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+
+        try {
             contactRepository.deleteByCompanyId(companyId);
             logger.info("All Contacts Successfully Deleted for CompanyId: " + companyId);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -158,14 +195,29 @@ public class ContactService
 
     public ResponseEntity<Contact> addContactToCustomer(Long customerId, Contact newContact) {
         try {
+            if (!contactRepository.existsById(newContact.getId())) {
+                throw new ResourceNotFoundException("Contact does not exist: id=" + newContact.getId());
+            }
+
+            if (!customerRepository.existsById(customerId)) {
+                throw new ResourceNotFoundException("Customer does not exist: id=" + customerId);
+            }
+        } catch (Exception e) {
+            logger.error(e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+
+        try {
             Contact contact = contactRepository.findById(newContact.getId())
                     .orElseThrow(() -> new ResourceNotFoundException("Contact does not exist: id=" + newContact.getId()));
             Customer customer = customerRepository.findById(customerId)
                     .orElseThrow(() -> new ResourceNotFoundException("Customer does not exist: id=" + customerId));
             contact.setCustomer(customer);
-            logger.info(customer);
+            contactRepository.save(contact);
+            logger.info(contact);
             logger.info("Contact Successfully Added for CustomerId: " + customerId);
-            return new ResponseEntity<>(contactRepository.save(contact), HttpStatus.OK);
+            return new ResponseEntity<>(contact, HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -178,6 +230,14 @@ public class ContactService
             if (!customerRepository.existsById(customerId)) {
                 throw new ResourceNotFoundException("Customer does not exist: id=" + customerId);
             }
+        } catch (Exception e) {
+            logger.error(e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        }
+
+        try {
+
             List<Contact> contacts = new ArrayList<>();
             contacts = contactRepository.findByCustomerId(customerId);
             if (contacts.isEmpty()) {

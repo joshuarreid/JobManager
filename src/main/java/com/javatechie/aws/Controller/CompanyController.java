@@ -33,6 +33,7 @@ public class CompanyController {
     }
 
     @PostMapping("/company")
+    @ResponseBody
     public ResponseEntity<Company> createCompany(@RequestBody Company newCompany) {
         logger.info("Creating Company...");
         logger.info(newCompany.toString());
@@ -51,10 +52,6 @@ public class CompanyController {
         return companyService.deleteCompany(id);
     }
 
-    @DeleteMapping("/company")
-    public ResponseEntity<HttpStatus> deleteAllCompanies() {
-        logger.info("Deleting All Companies...");
-        return companyService.deleteAllCompanies();
-    }
+
 
 }

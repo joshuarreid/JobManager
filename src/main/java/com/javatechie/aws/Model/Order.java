@@ -23,10 +23,10 @@ public class Order {
     private Long id;
 
     @CreatedDate
-    @Column(name = "createdAt")
+    @Column(name = "createdAt", nullable = false)
     private Date createdAt = new Date();
 
-    @Column(name = "merchant")
+    @Column(name = "merchant", nullable = false)
     private String merchant;
 
     @Column(name = "description")

@@ -22,10 +22,10 @@ public class Job {
     private Long id;
 
     @CreatedDate
-    @Column(name = "createdAt")
+    @Column(name = "createdAt", nullable = false)
     private Date createdAt = new Date();
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String Name;
 
     @Column(name = "estimatedCost")

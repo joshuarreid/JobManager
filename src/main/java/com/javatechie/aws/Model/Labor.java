@@ -22,10 +22,10 @@ public class Labor {
     private Long id;
 
     @CreatedDate
-    @Column(name = "createdAt")
+    @Column(name = "createdAt", nullable = false)
     private Date createdAt = new Date();
 
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     private String description;
 
     @Column(name = "totalHours")
@@ -53,9 +53,6 @@ public class Labor {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
 
     public String getDescription() {
         return description;

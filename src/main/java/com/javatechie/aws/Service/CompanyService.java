@@ -23,7 +23,7 @@ public class CompanyService
 
     public ResponseEntity<List<Company>> getAllCompanies() {
         try {
-            List<Company> companies = new ArrayList<Company>();
+            List<Company> companies = new ArrayList<>();
             companyRepository.findAll().forEach(companies::add);
             logger.info(companies.toString());
             if (companies.isEmpty()) {
@@ -51,7 +51,7 @@ public class CompanyService
 
         } catch (Exception e) {
             logger.error(e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
     }
@@ -59,6 +59,10 @@ public class CompanyService
 
     public ResponseEntity<Company> createCompany(Company newCompany) {
         try {
+            if (newCompany.getName() == null) {
+                logger.info("name is null");
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
             Company company = companyRepository.save(newCompany);
             logger.info(company);
             logger.info("Company Successfully Created");
@@ -72,6 +76,17 @@ public class CompanyService
 
 
     public ResponseEntity<Company> updateCompany(long id, Company updatedCompany) {
+        try {
+            if (!companyRepository.existsById(id)) {
+                throw new ResourceNotFoundException("Company does not exist: id=" + id);
+            }
+        } catch (Exception e) {
+            logger.error(e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        }
+
+
         try {
             Company company = companyRepository.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException("Company does not exist: id=" + id));
@@ -91,9 +106,20 @@ public class CompanyService
 
     public ResponseEntity<HttpStatus> deleteCompany(long id) {
         try {
+            if (!companyRepository.existsById(id)) {
+                throw new ResourceNotFoundException("Company does not exist: id=" + id);
+            }
+        } catch (Exception e) {
+            logger.error(e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        }
+
+
+        try {
             companyRepository.deleteById(id);
             logger.info("Company Successfully Deleted");
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -101,16 +127,4 @@ public class CompanyService
 
     }
 
-
-    public ResponseEntity<HttpStatus> deleteAllCompanies() {
-        try {
-            companyRepository.deleteAll();
-            logger.info("All Companies Successfully Deleted");
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            logger.error(e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-    }
 }
