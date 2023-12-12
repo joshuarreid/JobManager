@@ -48,7 +48,7 @@ public class Contact {
 
     @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "customer_id", nullable = true)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Customer customer;
 
     public String getImage() {

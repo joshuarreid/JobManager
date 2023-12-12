@@ -29,10 +29,10 @@ public class Labor {
     private String description;
 
     @Column(name = "totalHours")
-    private Long totalHours;
+    private Double totalHours;
 
     @Column(name = "totalCost")
-    private Long totalCost;
+    private Double totalCost;
 
     @Column(name = "status")
     private Status status;
@@ -49,6 +49,10 @@ public class Labor {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -62,19 +66,19 @@ public class Labor {
         this.description = description;
     }
 
-    public Long getTotalHours() {
+    public Double getTotalHours() {
         return totalHours;
     }
 
-    public void setTotalHours(Long totalHours) {
+    public void setTotalHours(Double totalHours) {
         this.totalHours = totalHours;
     }
 
-    public Long getTotalCost() {
+    public Double getTotalCost() {
         return totalCost;
     }
 
-    public void setTotalCost(Long totalCost) {
+    public void setTotalCost(Double totalCost) {
         this.totalCost = totalCost;
     }
 

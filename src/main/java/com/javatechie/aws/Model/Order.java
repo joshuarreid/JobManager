@@ -1,7 +1,6 @@
 package com.javatechie.aws.Model;
 
 import com.javatechie.aws.common.ShipmentStatus;
-import com.javatechie.aws.common.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,7 +35,7 @@ public class Order {
     private String website;
 
     @Column(name = "cost")
-    private Long cost;
+    private Double cost;
 
     @Column(name = "status")
     private ShipmentStatus status;
@@ -85,11 +84,11 @@ public class Order {
         this.website = website;
     }
 
-    public Long getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(Long cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 

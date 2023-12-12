@@ -1,7 +1,6 @@
 package com.javatechie.aws.Model;
 
 import com.javatechie.aws.common.ExpenseType;
-import com.javatechie.aws.common.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,7 +29,7 @@ public class Expense {
     private String description;
 
     @Column(name = "cost")
-    private Long cost;
+    private Double cost;
 
     @Column(name = "type")
     private ExpenseType type;
@@ -74,11 +73,11 @@ public class Expense {
         this.description = description;
     }
 
-    public Long getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(Long cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 

@@ -1,9 +1,7 @@
 package com.javatechie.aws.Service;
 
 import com.amazonaws.services.secretsmanager.model.ResourceNotFoundException;
-import com.javatechie.aws.Controller.ContractorController;
 import com.javatechie.aws.DAO.*;
-import com.javatechie.aws.Model.Contact;
 import com.javatechie.aws.Model.Contractor;
 import com.javatechie.aws.Model.Order;
 import org.apache.logging.log4j.LogManager;
@@ -12,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +50,13 @@ public class ContractorService
             if (!laborRepository.existsById(laborId)) {
                 throw new ResourceNotFoundException("Labor does not exist: id=" + laborId);
             }
+        } catch (Exception e) {
+            logger.error(e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+
+        try {
             List<Contractor> contractors = new ArrayList<>();
             contractors = contractorRepository.findByLaborId(laborId);
             if (contractors.isEmpty()) {
@@ -71,6 +75,17 @@ public class ContractorService
 
     public ResponseEntity<Contractor> createContractor(Long laborId, Contractor newContractor) {
         try {
+            if (!laborRepository.existsById(laborId)) {
+                throw new ResourceNotFoundException("Labor does not exist: id=" + laborId);
+            }
+        } catch (Exception e) {
+            logger.error(e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        }
+
+
+        try {
             Contractor contractor = laborRepository.findById(laborId).map(labor -> {
                 newContractor.setLabor(labor);
                 return contractorRepository.save(newContractor);
@@ -87,6 +102,16 @@ public class ContractorService
 
 
     public ResponseEntity<Contractor> updateContractor(long id, Contractor updatedContractor) {
+        try {
+            if (!contractorRepository.existsById(id)) {
+                throw new ResourceNotFoundException("Contractor does not exist: id=" + id);
+            }
+        } catch (Exception e) {
+            logger.error(e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        }
+
         try {
             Contractor contractor = contractorRepository.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException("Contractor does not exist: id=" + id));
@@ -115,23 +140,41 @@ public class ContractorService
 
     public ResponseEntity<HttpStatus> deleteContractor(long id) {
         try {
+            if (!contractorRepository.existsById(id)) {
+                throw new ResourceNotFoundException("Contractor does not exist: id=" + id);
+            }
+        } catch (Exception e) {
+            logger.error(e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        }
+
+
+        try {
             contractorRepository.deleteById(id);
             logger.info("Contractor Successfully Deleted");
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    public ResponseEntity<List<Order>> deleteAllContractorsOfLabor(Long laborId) {
+    public ResponseEntity<HttpStatus> deleteAllContractorsOfLabor(Long laborId) {
         try {
             if (!laborRepository.existsById(laborId)) {
                 throw new ResourceNotFoundException("Labor does not exist: id=" + laborId);
             }
+        } catch(Exception e) {
+            logger.error(e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+
             contractorRepository.deleteByLaborId(laborId);
             logger.info("All Contacts Successfully Deleted for LaborId: " + laborId);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

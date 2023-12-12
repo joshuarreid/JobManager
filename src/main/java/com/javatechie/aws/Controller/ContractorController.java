@@ -28,7 +28,7 @@ public class ContractorController {
     }
 
     @GetMapping("/labor/{laborId}/contractors")
-    public ResponseEntity<List<Contractor>> getAllContractorsByJobId(@PathVariable(value = "laborId") Long laborId) {
+    public ResponseEntity<List<Contractor>> getAllContractorsByLaborId(@PathVariable(value = "laborId") Long laborId) {
         logger.info("Fetching Contractor for laborId: " + laborId);
         return contractorService.getAllContractorsByLaborId(laborId);
     }
@@ -55,7 +55,7 @@ public class ContractorController {
     }
 
     @DeleteMapping("/labor/{laborId}/contractors")
-    public ResponseEntity<List<Order>> deleteAllContractorsOfLabor(@PathVariable(value = "laborId") Long laborId) {
+    public ResponseEntity<HttpStatus> deleteAllContractorsOfLabor(@PathVariable(value = "laborId") Long laborId) {
         logger.info("Deleting All Contractors for LaborId: " + laborId);
         return contractorService.deleteAllContractorsOfLabor(laborId);
     }

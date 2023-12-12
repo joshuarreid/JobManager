@@ -3,7 +3,6 @@ package com.javatechie.aws.Service;
 import com.amazonaws.services.secretsmanager.model.ResourceNotFoundException;
 import com.javatechie.aws.DAO.JobRepository;
 import com.javatechie.aws.DAO.OrderRepository;
-import com.javatechie.aws.Model.Labor;
 import com.javatechie.aws.Model.Order;
 import com.javatechie.aws.common.ShipmentStatus;
 import org.apache.logging.log4j.LogManager;

@@ -38,10 +38,10 @@ public class Contractor {
     private String address;
 
     @Column(name = "payRate")
-    private Long payRate;
+    private Double payRate;
 
     @Column(name = "hoursWorked")
-    private Long hoursWorked;
+    private Double hoursWorked;
 
     @Column(name = "status")
     private Status status;
@@ -51,7 +51,7 @@ public class Contractor {
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "labor_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Labor labor;
 
     public String getImage() {
@@ -102,19 +102,19 @@ public class Contractor {
         this.address = address;
     }
 
-    public Long getPayRate() {
+    public Double getPayRate() {
         return payRate;
     }
 
-    public void setPayRate(Long payRate) {
+    public void setPayRate(Double payRate) {
         this.payRate = payRate;
     }
 
-    public Long getHoursWorked() {
+    public Double getHoursWorked() {
         return hoursWorked;
     }
 
-    public void setHoursWorked(Long hoursWorked) {
+    public void setHoursWorked(Double hoursWorked) {
         this.hoursWorked = hoursWorked;
     }
 

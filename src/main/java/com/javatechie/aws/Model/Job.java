@@ -30,10 +30,10 @@ public class Job {
     private String Name;
 
     @Column(name = "estimatedCost")
-    private Long estimatedCost;
+    private Double estimatedCost;
 
     @Column(name = "totalCost")
-    private Long totalCost;
+    private Double totalCost;
 
     @Column(name = "status")
     private Status status;
@@ -46,8 +46,8 @@ public class Job {
     private Date completedAt = new Date();
 
     @ManyToOne(fetch = FetchType.EAGER, optional = true)
-    @JoinColumn(name = "customer_id", nullable = true)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "customer_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Customer customer;
 
 
@@ -61,6 +61,10 @@ public class Job {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Date getCreatedAt() {
@@ -79,19 +83,19 @@ public class Job {
         Name = name;
     }
 
-    public Long getEstimatedCost() {
+    public Double getEstimatedCost() {
         return estimatedCost;
     }
 
-    public void setEstimatedCost(Long estimatedCost) {
+    public void setEstimatedCost(Double estimatedCost) {
         this.estimatedCost = estimatedCost;
     }
 
-    public Long getTotalCost() {
+    public Double getTotalCost() {
         return totalCost;
     }
 
-    public void setTotalCost(Long totalCost) {
+    public void setTotalCost(Double totalCost) {
         this.totalCost = totalCost;
     }
 
