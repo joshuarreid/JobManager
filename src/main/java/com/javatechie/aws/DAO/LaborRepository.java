@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface LaborRepository extends CrudRepository<Labor,Long> {
 
-    List<Labor> findByLaborId(Long jobId);
+    List<Labor> findByJobId(Long jobId);
 
     List<Labor> findByStatus(Status status);
 

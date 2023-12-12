@@ -53,7 +53,7 @@ public class LaborService {
                 throw new ResourceNotFoundException("Job does not exist: id=" + jobId);
             }
             List<Labor> labors = new ArrayList<>();
-            labors = laborRepository.findByLaborId(jobId);
+            labors = laborRepository.findByJobId(jobId);
             if (labors.isEmpty()) {
                 logger.info("No Labor Found for JobId: " + jobId);
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
