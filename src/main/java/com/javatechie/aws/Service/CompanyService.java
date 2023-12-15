@@ -1,8 +1,10 @@
 package com.javatechie.aws.Service;
 
+import com.javatechie.aws.common.exception.ValidationException;
+import com.javatechie.aws.common.utility.ResponseHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import com.amazonaws.services.secretsmanager.model.ResourceNotFoundException;
+import com.javatechie.aws.common.exception.ResourceNotFoundException;
 import com.javatechie.aws.DAO.CompanyRepository;
 import com.javatechie.aws.Model.Company;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,56 +23,29 @@ public class CompanyService
     private static final Logger logger = LogManager.getLogger(CompanyService.class);
 
 
-    public ResponseEntity<List<Company>> getAllCompanies() {
-        try {
-            List<Company> companies = new ArrayList<>();
-            companyRepository.findAll().forEach(companies::add);
-            logger.info(companies.toString());
-            if (companies.isEmpty()) {
-                logger.info("No Companies Found");
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            logger.info("All Companies Successfully Fetched");
-            return new ResponseEntity<>(companies, HttpStatus.OK);
-
-        } catch (Exception e) {
-            logger.error(e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<Object> getAllCompanies() {
+        List<Company> companies = new ArrayList<>();
+        companyRepository.findAll().forEach(companies::add);
+        if (companies.isEmpty()) {
+            return ResponseHandler.generateErrorResponse(companies, HttpStatus.BAD_REQUEST);
         }
-
+        logger.info(companies.toString());
+        return ResponseHandler.generateResponse(companies);
     }
 
 
-    public ResponseEntity<Company> getCompanyById(long id) {
-        try {
+    public ResponseEntity<Object> getCompanyById(long id) {
             Company company = companyRepository.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException("Company does not exist: id=" + id));
+                    .orElseThrow(() -> new ResourceNotFoundException("company id does not exist: " + id));
             logger.info(company.toString());
-            logger.info("Company Successfully Fetched");
-            return new ResponseEntity<>(company, HttpStatus.OK);
-
-        } catch (Exception e) {
-            logger.error(e);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
+            return ResponseHandler.generateResponse(company);
     }
 
 
-    public ResponseEntity<Company> createCompany(Company newCompany) {
-        try {
-            if (newCompany.getName() == null) {
-                logger.info("name is null");
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-            Company company = companyRepository.save(newCompany);
-            logger.info(company);
-            logger.info("Company Successfully Created");
-            return new ResponseEntity<>(company, HttpStatus.CREATED);
-        } catch (Exception e) {
-            logger.error(e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<Object> createCompany(Company newCompany) {
+        Company company = companyRepository.save(newCompany);
+        logger.info(company.toString());
+        return ResponseHandler.generateResponse(company);
 
     }
 
@@ -95,7 +70,6 @@ public class CompanyService
             company.setImage(updatedCompany.getImage());
             company = companyRepository.save(company);
             logger.info(company);
-            logger.info("Company Successfully Updated");
             return new ResponseEntity<>(company, HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e);

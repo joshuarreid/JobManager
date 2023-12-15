@@ -2,6 +2,7 @@ package com.javatechie.aws.Controller;
 
 import com.javatechie.aws.Model.Company;
 import com.javatechie.aws.Service.CompanyService;
+import com.javatechie.aws.common.utility.ResponseHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,34 +22,28 @@ public class CompanyController {
 
 
     @GetMapping("/company")
-    public ResponseEntity<List<Company>> getAllCompanies() {
-        logger.info("Fetching All Companies...");
+    public ResponseEntity<Object> getAllCompanies() {
         return companyService.getAllCompanies();
     }
 
     @GetMapping("/company/{id}")
-    public ResponseEntity<Company> getCompanyById(@PathVariable("id") long id) {
-        logger.info("Fetching CompanyId: " + id);
+    public ResponseEntity<Object> getCompanyById(@PathVariable("id") long id) {
         return companyService.getCompanyById(id);
     }
 
     @PostMapping("/company")
     @ResponseBody
-    public ResponseEntity<Company> createCompany(@RequestBody Company newCompany) {
-        logger.info("Creating Company...");
-        logger.info(newCompany.toString());
+    public ResponseEntity<Object> createCompany(@RequestBody Company newCompany) {
         return companyService.createCompany(newCompany);
     }
 
     @PutMapping("/company/{id}")
     public ResponseEntity<Company> updateCompany(@PathVariable("id") long id, @RequestBody Company updatedCompany) {
-        logger.info("Updating CompanyId: " + id);
         return companyService.updateCompany(id, updatedCompany);
     }
 
     @DeleteMapping("/company/{id}")
     public ResponseEntity<HttpStatus> deleteCompany(@PathVariable("id") long id) {
-        logger.info("Deleting CompanyId: " + id);
         return companyService.deleteCompany(id);
     }
 
