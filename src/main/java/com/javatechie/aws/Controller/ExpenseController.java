@@ -22,41 +22,34 @@ public class ExpenseController {
     private static final Logger logger = LogManager.getLogger(ExpenseController.class);
 
     @GetMapping("/expense")
-    public ResponseEntity<Iterable<Expense>> getAllExpenses() {
-        logger.info("Fetching All Expenses...");
+    public ResponseEntity<Object> getAllExpenses() {
         return expenseService.getAllExpenses();
     }
 
     @GetMapping("/job/{jobId}/expenses")
-    public ResponseEntity<List<Expense>> getAllExpensesByJobId(@PathVariable(value = "jobId") Long jobId) {
-        logger.info("Fetching Expenses for jobId: " + jobId);
+    public ResponseEntity<Object> getAllExpensesByJobId(@PathVariable(value = "jobId") Long jobId) {
         return expenseService.getAllExpensesByJobId(jobId);
     }
 
     @PostMapping("/job/{jobId}/expenses")
-    public ResponseEntity<Expense> createExpense(@PathVariable(value = "jobId") Long jobId,
+    public ResponseEntity<Object> createExpense(@PathVariable(value = "jobId") Long jobId,
                                              @RequestBody Expense newExpense) {
-        logger.info("Creating Expense...");
-        logger.info(newExpense.toString());
         return expenseService.createExpense(jobId, newExpense);
     }
 
 
     @PutMapping("/expense/{id}")
-    public ResponseEntity<Expense> updateExpense(@PathVariable("id") long id, @RequestBody Expense updatedExpense) {
-        logger.info("Updating ExpenseId: " + id);
+    public ResponseEntity<Object> updateExpense(@PathVariable("id") long id, @RequestBody Expense updatedExpense) {
         return expenseService.updateExpense(id, updatedExpense);
     }
 
     @DeleteMapping("/expense/{id}")
-    public ResponseEntity<HttpStatus> deleteExpense(@PathVariable("id") long id) {
-        logger.info("Deleting ExpenseId: " + id);
+    public ResponseEntity<Object> deleteExpense(@PathVariable("id") long id) {
         return expenseService.deleteExpense(id);
     }
 
     @DeleteMapping("/job/{jobId}/expenses")
-    public ResponseEntity<List<Expense>> deleteAllExpensesOfJob(@PathVariable(value = "jobId") Long jobId) {
-        logger.info("Deleting All Expenses for JobId: " + jobId);
+    public ResponseEntity<Object> deleteAllExpensesOfJob(@PathVariable(value = "jobId") Long jobId) {
         return expenseService.deleteAllExpensesOfJob(jobId);
     }
 

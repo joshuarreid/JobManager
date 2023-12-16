@@ -1,9 +1,10 @@
 package com.javatechie.aws.Service;
 
-import com.amazonaws.services.secretsmanager.model.ResourceNotFoundException;
+import com.javatechie.aws.common.exception.ResourceNotFoundException;
 import com.javatechie.aws.DAO.CustomerRepository;
 import com.javatechie.aws.DAO.JobRepository;
 import com.javatechie.aws.Model.Job;
+import com.javatechie.aws.common.utility.ResponseHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,122 +26,63 @@ public class JobService {
 
     private static final Logger logger = LogManager.getLogger(JobService.class);
 
-    public ResponseEntity<Iterable<Job>> getAllJobs() {
-        try {
-            Iterable<Job> jobs = new ArrayList<>();
-            jobs = jobRepository.findAll();
-            logger.info(jobs.toString());
-
-            if (!jobs.iterator().hasNext()) {
-                logger.info("No Jobs Found");
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            logger.info("All Jobs Successfully Fetched");
-            return new ResponseEntity<>(jobs, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error(e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
+    public ResponseEntity<Object> getAllJobs() {
+        Iterable<Job> jobs = new ArrayList<>();
+        jobs = jobRepository.findAll();
+        logger.info(jobs);
+        return ResponseHandler.generateResponse(jobs);
     }
 
-    public ResponseEntity<Job> getJobById(Long id) {
-        try {
-            Job job = jobRepository.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException("Job does not exist: id=" + id));
-            logger.info(job.toString());
-            logger.info("Job Successfully Fetched");
-            return new ResponseEntity<>(job, HttpStatus.OK);
-
-        } catch (Exception e) {
-            logger.error(e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<Object> getJobById(Long id) {
+        Job job = jobRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Job does not exist: id=" + id));
+        logger.info(job);
+        return ResponseHandler.generateResponse(job);
     }
 
-    public ResponseEntity<List<Job>> getAllJobsByCustomerId(Long customerId) {
-        try {
-            if (!customerRepository.existsById(customerId)) {
-                throw new ResourceNotFoundException("Customer does not exist: id=" + customerId);
-            }
-            List<Job> jobs = new ArrayList<>();
-            jobs = jobRepository.findByCustomerId(customerId);
-            if (jobs.isEmpty()) {
-                logger.info("No Jobs Found for CustomerId: " + customerId);
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            logger.info(jobs.size() + " Jobs Successfully Found for CustomerId: " + customerId);
-            return new ResponseEntity<>(jobs, HttpStatus.OK);
-        }
-        catch (Exception e) {
-            logger.error(e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<Object> getAllJobsByCustomerId(Long customerId) {
+        List<Job> jobs = new ArrayList<>();
+        jobs = jobRepository.findByCustomerId(customerId);
+        logger.info(jobs);
+        return ResponseHandler.generateResponse(jobs);
     }
 
 
-    public ResponseEntity<Job> createJob(Long customerId, Job newJob) {
-        try {
-            Job job = customerRepository.findById(customerId).map(customer -> {
-                newJob.setCustomer(customer);
-                return jobRepository.save(newJob);
-            }).orElseThrow(() -> new ResourceNotFoundException("Customer does not exist: id=" + customerId));
-            logger.info(job);
-            logger.info("Job Successfully Created for CustomerId: " + customerId);
-            return new ResponseEntity<>(job, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error(e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<Object> createJob(Long customerId, Job newJob) {
+        Job job = customerRepository.findById(customerId).map(customer -> {
+            newJob.setCustomer(customer);
+            return jobRepository.save(newJob);
+        }).orElseThrow(() -> new ResourceNotFoundException("Customer does not exist: id=" + customerId));
+        logger.info(job);
+        return ResponseHandler.generateResponse(job);
     }
 
 
 
-    public ResponseEntity<Job> updateJob(Long id, Job updatedJob) {
-        try {
-            Job job = jobRepository.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException("Job does not exist: id=" + id));
+    public ResponseEntity<Object> updateJob(Long id, Job updatedJob) {
+        Job job = jobRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Job does not exist: id=" + id));
 
-            job.setName(updatedJob.getName());
-            job.setStatus(updatedJob.getStatus());
-            job.setCustomer(updatedJob.getCustomer());
-            job.setEstimatedCost(updatedJob.getEstimatedCost());
-            job.setTotalCost(updatedJob.getTotalCost());
-            job.setCompletedAt(updatedJob.getCompletedAt());
-            jobRepository.save(job);
-            logger.info(job);
-            logger.info("Job Successfully Updated");
-            return new ResponseEntity<>(job, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error(e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        job.setName(updatedJob.getName());
+        job.setStatus(updatedJob.getStatus());
+        job.setCustomer(updatedJob.getCustomer());
+        job.setEstimatedCost(updatedJob.getEstimatedCost());
+        job.setTotalCost(updatedJob.getTotalCost());
+        job.setCompletedAt(updatedJob.getCompletedAt());
+        jobRepository.save(job);
+        logger.info(job);
+        return ResponseHandler.generateResponse(job);
     }
 
 
-    public ResponseEntity<HttpStatus> deleteJob(Long id) {
-        try {
-            jobRepository.deleteById(id);
-            logger.info("Job Successfully Deleted");
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            logger.error(e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<Object> deleteJob(Long id) {
+        jobRepository.deleteById(id);
+        return ResponseHandler.generateResponse(HttpStatus.OK);
     }
 
 
-    public ResponseEntity<List<Job>> deleteAllJobsOfCustomer(Long customerId) {
-        try {
-            if (!customerRepository.existsById(customerId)) {
-                throw new ResourceNotFoundException("Customer does not exist: id=" + customerId);
-            }
-            jobRepository.deleteByCustomerId(customerId);
-            logger.info("All Jobs Successfully Deleted for CustomerId: " + customerId);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            logger.error(e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<Object> deleteAllJobsOfCustomer(Long customerId) {
+        jobRepository.deleteByCustomerId(customerId);
+        return ResponseHandler.generateResponse(HttpStatus.OK);
     }
 }

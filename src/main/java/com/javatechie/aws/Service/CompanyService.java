@@ -26,10 +26,7 @@ public class CompanyService
     public ResponseEntity<Object> getAllCompanies() {
         List<Company> companies = new ArrayList<>();
         companyRepository.findAll().forEach(companies::add);
-        if (companies.isEmpty()) {
-            return ResponseHandler.generateErrorResponse(companies, HttpStatus.BAD_REQUEST);
-        }
-        logger.info(companies.toString());
+        logger.info(companies);
         return ResponseHandler.generateResponse(companies);
     }
 
@@ -50,56 +47,21 @@ public class CompanyService
     }
 
 
-    public ResponseEntity<Company> updateCompany(long id, Company updatedCompany) {
-        try {
-            if (!companyRepository.existsById(id)) {
-                throw new ResourceNotFoundException("Company does not exist: id=" + id);
-            }
-        } catch (Exception e) {
-            logger.error(e);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
-        }
-
-
-        try {
-            Company company = companyRepository.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException("Company does not exist: id=" + id));
-            company.setAddress(updatedCompany.getAddress());
-            company.setName(updatedCompany.getName());
-            company.setImage(updatedCompany.getImage());
-            company = companyRepository.save(company);
-            logger.info(company);
-            return new ResponseEntity<>(company, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error(e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
+    public ResponseEntity<Object> updateCompany(long id, Company updatedCompany) {
+        Company company = companyRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Company does not exist: id=" + id));
+        company.setAddress(updatedCompany.getAddress());
+        company.setName(updatedCompany.getName());
+        company.setImage(updatedCompany.getImage());
+        company = companyRepository.save(company);
+        logger.info(company);
+        return ResponseHandler.generateResponse(company);
     }
 
 
-    public ResponseEntity<HttpStatus> deleteCompany(long id) {
-        try {
-            if (!companyRepository.existsById(id)) {
-                throw new ResourceNotFoundException("Company does not exist: id=" + id);
-            }
-        } catch (Exception e) {
-            logger.error(e);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
-        }
-
-
-        try {
-            companyRepository.deleteById(id);
-            logger.info("Company Successfully Deleted");
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error(e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
+    public ResponseEntity<Object> deleteCompany(long id) {
+        companyRepository.deleteById(id);
+        return ResponseHandler.generateResponse(HttpStatus.OK);
     }
 
 }

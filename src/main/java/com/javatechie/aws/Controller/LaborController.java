@@ -27,47 +27,39 @@ public class LaborController {
     private static final Logger logger = LogManager.getLogger(LaborController.class);
 
     @GetMapping("/labor")
-    public ResponseEntity<Iterable<Labor>> getAllLabors() {
-        logger.info("Fetching All Labors...");
+    public ResponseEntity<Object> getAllLabors() {
         return laborService.getAllLabors();
     }
 
     @GetMapping("/job/{jobId}/labors")
-    public ResponseEntity<List<Labor>> getAllLaborsByJobId(@PathVariable(value = "jobId") Long jobId) {
-        logger.info("Fetching Labors for jobId: " + jobId);
+    public ResponseEntity<Object> getAllLaborsByJobId(@PathVariable(value = "jobId") Long jobId) {
         return laborService.getAllLaborsByJobId(jobId);
     }
 
     @GetMapping("/labor/{status}")
-    public ResponseEntity<List<Labor>> getAllLaborsByStatus(@PathVariable(value = "status") Status status) {
-        logger.info("Fetching All Labors with status: " + status.toString());
+    public ResponseEntity<Object> getAllLaborsByStatus(@PathVariable(value = "status") Status status) {
         return laborService.getAllLaborsByStatus(status);
     }
 
     @PostMapping("/job/{jobId}/labors")
-    public ResponseEntity<Labor> createLabor(@PathVariable(value = "jobId") Long jobId,
+    public ResponseEntity<Object> createLabor(@PathVariable(value = "jobId") Long jobId,
                                              @RequestBody Labor newLabor) {
-        logger.info("Creating Labor...");
-        logger.info(newLabor.toString());
         return laborService.createLabor(jobId, newLabor);
     }
 
 
     @PutMapping("/labor/{id}")
-    public ResponseEntity<Labor> updateLabor(@PathVariable("id") long id, @RequestBody Labor updatedLabor) {
-        logger.info("Updating LaborId: " + id);
+    public ResponseEntity<Object> updateLabor(@PathVariable("id") long id, @RequestBody Labor updatedLabor) {
         return laborService.updateLabor(id, updatedLabor);
     }
 
     @DeleteMapping("/labor/{id}")
-    public ResponseEntity<HttpStatus> deleteLabor(@PathVariable("id") long id) {
-        logger.info("Deleting LaborId: " + id);
+    public ResponseEntity<Object> deleteLabor(@PathVariable("id") long id) {
         return laborService.deleteLabor(id);
     }
 
     @DeleteMapping("/job/{jobId}/labors")
-    public ResponseEntity<List<Order>> deleteAllLaborsOfJob(@PathVariable(value = "jobId") Long jobId) {
-        logger.info("Deleting All Labors for JobId: " + jobId);
+    public ResponseEntity<Object> deleteAllLaborsOfJob(@PathVariable(value = "jobId") Long jobId) {
         return laborService.deleteAllLaborsOfJob(jobId);
     }
 

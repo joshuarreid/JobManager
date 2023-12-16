@@ -1,10 +1,11 @@
 package com.javatechie.aws.Service;
 
-import com.amazonaws.services.secretsmanager.model.ResourceNotFoundException;
+import com.javatechie.aws.common.exception.ResourceNotFoundException;
 import com.javatechie.aws.DAO.CustomerRepository;
 import com.javatechie.aws.Model.Company;
 import com.javatechie.aws.Model.Contractor;
 import com.javatechie.aws.Model.Customer;
+import com.javatechie.aws.common.utility.ResponseHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,105 +23,42 @@ public class CustomerService {
 
     private static final Logger logger = LogManager.getLogger(CustomerService.class);
 
-    public ResponseEntity<Iterable<Customer>> getAllCustomers() {
-        try {
-            Iterable<Customer> customers = new ArrayList<>();
-            customers = customerRepository.findAll();
-            logger.info(customers.toString());
-            if (!customers.iterator().hasNext()) {
-                logger.info("No Customers Found");
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            logger.info("All Customers Successfully Fetched");
-            return new ResponseEntity<>(customers, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error(e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
+    public ResponseEntity<Object> getAllCustomers() {
+        Iterable<Customer> customers = new ArrayList<>();
+        customers = customerRepository.findAll();
+        logger.info(customers);
+        return ResponseHandler.generateResponse(customers);
     }
 
 
-    public ResponseEntity<Customer> getCustomerById(Long id) {
-        try {
-            Customer customer = customerRepository.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException("Customer does not exist: id=" + id));
-            logger.info(customer.toString());
-            logger.info("Customer Successfully Fetched");
-            return new ResponseEntity<>(customer, HttpStatus.OK);
-
-        } catch (Exception e) {
-            logger.error(e);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Object> getCustomerById(Long id) {
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer does not exist: id=" + id));
+        logger.info(customer);
+        return ResponseHandler.generateResponse(customer);
     }
 
-    public ResponseEntity<Customer> createCustomer(Customer newCustomer) {
-        try {
-            if (newCustomer.getName() == null) {
-                logger.info("name is null");
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-            Customer customer = customerRepository.save(newCustomer);
-            logger.info(customer);
-            logger.info("Customer Successfully Created");
-            return new ResponseEntity<>(customer, HttpStatus.CREATED);
-        } catch (Exception e) {
-            logger.error(e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<Object> createCustomer(Customer newCustomer) {
+        Customer customer = customerRepository.save(newCustomer);
+        logger.info(customer);
+        return ResponseHandler.generateResponse(customer);
     }
 
-    public ResponseEntity<Customer> updateCustomer(long id, Customer updatedCustomer) {
-        try {
-            if (!customerRepository.existsById(id)) {
-                throw new ResourceNotFoundException("Customer does not exist: id=" + id);
-            }
-        } catch (Exception e) {
-            logger.error(e);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Object> updateCustomer(long id, Customer updatedCustomer) {
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer does not exist: id=" + id));
 
-
-        try {
-            Customer customer = customerRepository.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException("Customer does not exist: id=" + id));
-
-            customer.setAddresses(updatedCustomer.getAddresses());
-            customer.setName(updatedCustomer.getName());
-            customer.setImage(updatedCustomer.getImage());
-            customer = customerRepository.save(customer);
-            logger.info(customer);
-            logger.info("Customer Successfully Updated");
-            return new ResponseEntity<>(customer, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error(e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
+        customer.setAddresses(updatedCustomer.getAddresses());
+        customer.setName(updatedCustomer.getName());
+        customer.setImage(updatedCustomer.getImage());
+        customer = customerRepository.save(customer);
+        logger.info(customer);
+        return ResponseHandler.generateResponse(customer);
     }
 
 
-    public ResponseEntity<HttpStatus> deleteCustomer(long id) {
-        try {
-            if (!customerRepository.existsById(id)) {
-                throw new ResourceNotFoundException("Customer does not exist: id=" + id);
-            }
-        } catch (Exception e) {
-            logger.error(e);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-
-        try {
-            customerRepository.deleteById(id);
-            logger.info("Customer Successfully Deleted");
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error(e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<Object> deleteCustomer(long id) {
+        customerRepository.deleteById(id);
+        return ResponseHandler.generateResponse(HttpStatus.OK);
     }
-
-
 }

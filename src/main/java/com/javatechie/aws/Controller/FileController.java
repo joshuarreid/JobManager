@@ -24,35 +24,29 @@ public class FileController {
 
 
     @GetMapping("/job/{jobId}/files")
-    public ResponseEntity<List<File>> getAllFilesByJobId(@PathVariable(value = "jobId") Long jobId) {
-        logger.info("Fetching Files for jobId: " + jobId);
+    public ResponseEntity<Object> getAllFilesByJobId(@PathVariable(value = "jobId") Long jobId) {
         return fileService.getAllFilesByJobId(jobId);
     }
 
     @PostMapping("/job/{jobId}/files")
-    public ResponseEntity<File> createFile(@PathVariable(value = "jobId") Long jobId,
+    public ResponseEntity<Object> createFile(@PathVariable(value = "jobId") Long jobId,
                                              @RequestBody File newFile) {
-        logger.info("Creating File...");
-        logger.info(newFile.toString());
         return fileService.createFile(jobId, newFile);
     }
 
 
     @PutMapping("/file/{id}")
-    public ResponseEntity<File> updateFile(@PathVariable("id") Long id, @RequestBody File updatedFile) {
-        logger.info("Updating FileId: " + id);
+    public ResponseEntity<Object> updateFile(@PathVariable("id") Long id, @RequestBody File updatedFile) {
         return fileService.updateFile(id, updatedFile);
     }
 
     @DeleteMapping("/file/{id}")
-    public ResponseEntity<HttpStatus> deleteFile(@PathVariable("id") Long id) {
-        logger.info("Deleting FileId: " + id);
+    public ResponseEntity<Object> deleteFile(@PathVariable("id") Long id) {
         return fileService.deleteFile(id);
     }
 
     @DeleteMapping("/job/{jobId}/files")
-    public ResponseEntity<List<File>> deleteAllFilesOfJob(@PathVariable(value = "jobId") Long jobId) {
-        logger.info("Deleting All Files for JobId: " + jobId);
+    public ResponseEntity<Object> deleteAllFilesOfJob(@PathVariable(value = "jobId") Long jobId) {
         return fileService.deleteAllFilesOfJob(jobId);
     }
 

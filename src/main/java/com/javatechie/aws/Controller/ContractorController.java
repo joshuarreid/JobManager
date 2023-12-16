@@ -22,41 +22,34 @@ public class ContractorController {
     private static final Logger logger = LogManager.getLogger(ContractorController.class);
 
     @GetMapping("/contractor")
-    public ResponseEntity<Iterable<Contractor>> getAllContractors() {
-        logger.info("Fetching All Contractors...");
+    public ResponseEntity<Object> getAllContractors() {
         return contractorService.getAllContractors();
     }
 
     @GetMapping("/labor/{laborId}/contractors")
-    public ResponseEntity<List<Contractor>> getAllContractorsByLaborId(@PathVariable(value = "laborId") Long laborId) {
-        logger.info("Fetching Contractor for laborId: " + laborId);
+    public ResponseEntity<Object> getAllContractorsByLaborId(@PathVariable(value = "laborId") Long laborId) {
         return contractorService.getAllContractorsByLaborId(laborId);
     }
 
     @PostMapping("/labor/{laborId}/contractors")
-    public ResponseEntity<Contractor> createContractor(@PathVariable(value = "laborId") Long laborId,
+    public ResponseEntity<Object> createContractor(@PathVariable(value = "laborId") Long laborId,
                                                        @RequestBody Contractor newContractor) {
-        logger.info("Creating Contractor...");
-        logger.info(newContractor.toString());
         return contractorService.createContractor(laborId, newContractor);
     }
 
 
     @PutMapping("/contractor/{id}")
-    public ResponseEntity<Contractor> updateContractor(@PathVariable("id") Long id, @RequestBody Contractor updatedContractor) {
-        logger.info("Updating ContractorId: " + id);
+    public ResponseEntity<Object> updateContractor(@PathVariable("id") Long id, @RequestBody Contractor updatedContractor) {
         return contractorService.updateContractor(id, updatedContractor);
     }
 
     @DeleteMapping("/contractor/{id}")
-    public ResponseEntity<HttpStatus> deleteContractor(@PathVariable("id") Long id) {
-        logger.info("Deleting ContractorId: " + id);
+    public ResponseEntity<Object> deleteContractor(@PathVariable("id") Long id) {
         return contractorService.deleteContractor(id);
     }
 
     @DeleteMapping("/labor/{laborId}/contractors")
-    public ResponseEntity<HttpStatus> deleteAllContractorsOfLabor(@PathVariable(value = "laborId") Long laborId) {
-        logger.info("Deleting All Contractors for LaborId: " + laborId);
+    public ResponseEntity<Object> deleteAllContractorsOfLabor(@PathVariable(value = "laborId") Long laborId) {
         return contractorService.deleteAllContractorsOfLabor(laborId);
     }
 

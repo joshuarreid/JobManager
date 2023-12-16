@@ -20,35 +20,29 @@ public class CustomerController {
     private static final Logger logger = LogManager.getLogger(CustomerController.class);
 
     @GetMapping("/customer")
-    public ResponseEntity<Iterable<Customer>> getAllCustomers() {
-        logger.info("Fetching All Customers...");
+    public ResponseEntity<Object> getAllCustomers() {
         return customerService.getAllCustomers();
     }
 
 
     @GetMapping("/customer/{id}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable(value = "id") Long id) {
-        logger.info("Fetching CustomerId: " + id);
+    public ResponseEntity<Object> getCustomerById(@PathVariable(value = "id") Long id) {
         return customerService.getCustomerById(id);
     }
 
     @PostMapping("/customer")
-    public ResponseEntity<Customer> createCustomer(@RequestBody Customer newCustomer) {
-        logger.info("Creating Customer...");
-        logger.info(newCustomer.toString());
+    public ResponseEntity<Object> createCustomer(@RequestBody Customer newCustomer) {
         return customerService.createCustomer(newCustomer);
     }
 
     @PutMapping("/customer/{id}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable("id") long id, @RequestBody Customer updatedCustomer) {
-        logger.info("Updating CustomerId: " + id);
+    public ResponseEntity<Object> updateCustomer(@PathVariable("id") long id, @RequestBody Customer updatedCustomer) {
         return customerService.updateCustomer(id, updatedCustomer);
     }
 
 
     @DeleteMapping("/customer/{id}")
-    public ResponseEntity<HttpStatus> deleteCustomer(@PathVariable("id") long id) {
-        logger.info("Deleting CustomerId: " + id);
+    public ResponseEntity<Object> deleteCustomer(@PathVariable("id") long id) {
         return customerService.deleteCustomer(id);
     }
 

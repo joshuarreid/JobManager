@@ -25,47 +25,39 @@ public class OrderController {
     private static final Logger logger = LogManager.getLogger(OrderController.class);
 
     @GetMapping("/order")
-    public ResponseEntity<Iterable<Order>> getAllOrders() {
-        logger.info("Fetching All Orders...");
+    public ResponseEntity<Object> getAllOrders() {
         return orderService.getAllOrders();
     }
 
     @GetMapping("/job/{jobId}/orders")
-    public ResponseEntity<List<Order>> getAllOrdersByJobId(@PathVariable(value = "jobId") Long jobId) {
-        logger.info("Fetching Orders for jobId: " + jobId);
+    public ResponseEntity<Object> getAllOrdersByJobId(@PathVariable(value = "jobId") Long jobId) {
         return orderService.getAllOrdersByJobId(jobId);
     }
 
     @GetMapping("/order/{status}")
-    public ResponseEntity<List<Order>> getAllOrdersByStatus(@PathVariable(value = "status") ShipmentStatus status) {
-        logger.info("Fetching All Orders with status: " + status.toString());
+    public ResponseEntity<Object> getAllOrdersByStatus(@PathVariable(value = "status") ShipmentStatus status) {
         return orderService.getAllOrdersByStatus(status);
     }
 
     @PostMapping("/job/{jobId}/orders")
-    public ResponseEntity<Order> createOrder(@PathVariable(value = "jobId") Long jobId,
+    public ResponseEntity<Object> createOrder(@PathVariable(value = "jobId") Long jobId,
                                          @RequestBody Order newOrder) {
-        logger.info("Creating Order...");
-        logger.info(newOrder.toString());
         return orderService.createOrder(jobId, newOrder);
     }
 
 
     @PutMapping("/order/{id}")
-    public ResponseEntity<Order> updateOrder(@PathVariable("id") Long id, @RequestBody Order updatedOrder) {
-        logger.info("Updating OrderId: " + id);
+    public ResponseEntity<Object> updateOrder(@PathVariable("id") Long id, @RequestBody Order updatedOrder) {
         return orderService.updateOrder(id, updatedOrder);
     }
 
     @DeleteMapping("/order/{id}")
-    public ResponseEntity<HttpStatus> deleteOrder(@PathVariable("id") Long id) {
-        logger.info("Deleting OrderId: " + id);
+    public ResponseEntity<Object> deleteOrder(@PathVariable("id") Long id) {
         return orderService.deleteOrder(id);
     }
 
     @DeleteMapping("/job/{jobId}/orders")
-    public ResponseEntity<List<Order>> deleteAllOrdersOfJob(@PathVariable(value = "jobId") Long jobId) {
-        logger.info("Deleting All Orders for JobId: " + jobId);
+    public ResponseEntity<Object> deleteAllOrdersOfJob(@PathVariable(value = "jobId") Long jobId) {
         return orderService.deleteAllOrdersOfJob(jobId);
     }
 

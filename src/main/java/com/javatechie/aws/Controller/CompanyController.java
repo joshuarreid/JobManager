@@ -38,12 +38,12 @@ public class CompanyController {
     }
 
     @PutMapping("/company/{id}")
-    public ResponseEntity<Company> updateCompany(@PathVariable("id") long id, @RequestBody Company updatedCompany) {
+    public ResponseEntity<Object> updateCompany(@PathVariable("id") long id, @RequestBody Company updatedCompany) {
         return companyService.updateCompany(id, updatedCompany);
     }
 
     @DeleteMapping("/company/{id}")
-    public ResponseEntity<HttpStatus> deleteCompany(@PathVariable("id") long id) {
+    public ResponseEntity<Object> deleteCompany(@PathVariable("id") long id) {
         return companyService.deleteCompany(id);
     }
 

@@ -15,7 +15,7 @@ public class ResponseHandler {
 
     public static ResponseEntity<Object> generateResponse(Object responseObj) {
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("result", responseObj);
+        map.put("data", responseObj);
         return new ResponseEntity<Object>(map, HttpStatus.OK);
     }
 

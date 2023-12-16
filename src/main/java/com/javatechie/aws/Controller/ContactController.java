@@ -21,63 +21,52 @@ public class ContactController {
 
 
     @GetMapping("/contact")
-    public ResponseEntity<Iterable<Contact>> getAllContacts() {
-        logger.info("Fetching All Contacts...");
+    public ResponseEntity<Object> getAllContacts() {
         return contactService.getAllContacts();
     }
 
     @GetMapping("/contact/{id}")
-    public ResponseEntity<Contact> getContactById(@PathVariable(value = "id") Long id) {
-        logger.info("Fetching ContactId: " + id);
+    public ResponseEntity<Object> getContactById(@PathVariable(value = "id") Long id) {
         return contactService.getContactById(id);
     }
 
     @PutMapping("/contact/{id}")
-    public ResponseEntity<Contact> updateContact(@PathVariable("id") long id, @RequestBody Contact updatedContact) {
-        logger.info("Updating CompanyId: " + id);
+    public ResponseEntity<Object> updateContact(@PathVariable("id") long id, @RequestBody Contact updatedContact) {
         return contactService.updateContact(id, updatedContact);
     }
 
     @DeleteMapping("/contact/{id}")
-    public ResponseEntity<HttpStatus> deleteContact(@PathVariable("id") long id) {
-        logger.info("Deleting CompanyId: " + id);
+    public ResponseEntity<Object> deleteContact(@PathVariable("id") long id) {
         return contactService.deleteContact(id);
     }
 
     @GetMapping("/company/{companyId}/contacts")
-    public ResponseEntity<List<Contact>> getAllContactsByCompanyId(@PathVariable(value = "companyId") Long companyId) {
-        logger.info("Fetching Contacts for CompanyId: " + companyId);
+    public ResponseEntity<Object> getAllContactsByCompanyId(@PathVariable(value = "companyId") Long companyId) {
         return contactService.getAllContactsByCompanyId(companyId);
     }
 
 
     @PostMapping("/company/{companyId}/contacts")
-    public ResponseEntity<Contact> createContact(@PathVariable(value = "companyId") Long companyId,
+    public ResponseEntity<Object> createContact(@PathVariable(value = "companyId") Long companyId,
                                                  @RequestBody Contact newContact) {
-        logger.info("Creating Contact...");
-        logger.info(newContact.toString());
         return contactService.createContact(companyId, newContact);
     }
 
 
     @DeleteMapping("/company/{companyId}/contacts")
-    public ResponseEntity<HttpStatus> deleteAllContactsOfCompany(@PathVariable(value = "companyId") Long companyId) {
-        logger.info("Deleting All Contacts for CompanyId: " + companyId);
+    public ResponseEntity<Object> deleteAllContactsOfCompany(@PathVariable(value = "companyId") Long companyId) {
         return contactService.deleteAllContactsOfCompany(companyId);
     }
 
 
     @PutMapping("/customer/{customerId}/contacts")
-    public ResponseEntity<Contact> addContactToCustomer(@PathVariable(value = "customerId") Long customerId,
+    public ResponseEntity<Object> addContactToCustomer(@PathVariable(value = "customerId") Long customerId,
                                               @RequestBody Contact newContact) {
-        logger.info("Adding Contact to CustomerId: " + customerId);
-        logger.info(newContact.toString());
         return contactService.addContactToCustomer(customerId, newContact);
     }
 
     @GetMapping("/customer/{customerId}/contacts")
-    public ResponseEntity<List<Contact>> getAllContactsByCustomerId(@PathVariable(value = "customerId") Long customerId) {
-        logger.info("Fetching All Contacts for CustomerId: " + customerId);
+    public ResponseEntity<Object> getAllContactsByCustomerId(@PathVariable(value = "customerId") Long customerId) {
         return contactService.getAllContactsByCustomerId(customerId);
     }
 

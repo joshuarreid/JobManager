@@ -21,49 +21,41 @@ public class JobController {
     private static final Logger logger = LogManager.getLogger(JobController.class);
 
     @GetMapping("/job")
-    public ResponseEntity<Iterable<Job>> getAllJobs() {
-        logger.info("Fetching All Jobs...");
+    public ResponseEntity<Object> getAllJobs() {
         return jobService.getAllJobs();
     }
 
     @GetMapping("/job/{id}")
-    public ResponseEntity<Job> getJobById(@PathVariable(value = "id") Long id) {
-        logger.info("Fetching All Jobs...");
+    public ResponseEntity<Object> getJobById(@PathVariable(value = "id") Long id) {
         return jobService.getJobById(id);
     }
 
     @GetMapping("/customer/{customerId}/jobs")
-    public ResponseEntity<List<Job>> getAllJobsByCustomerId(@PathVariable(value = "customerId") Long customerId) {
-        logger.info("Fetching Jobs for CustomerId: " + customerId);
+    public ResponseEntity<Object> getAllJobsByCustomerId(@PathVariable(value = "customerId") Long customerId) {
         return jobService.getAllJobsByCustomerId(customerId);
     }
 
     @PostMapping("/customer/{customerId}/jobs")
-    public ResponseEntity<Job> createJob(@PathVariable(value = "customerId") Long customerId,
+    public ResponseEntity<Object> createJob(@PathVariable(value = "customerId") Long customerId,
                                          @RequestBody Job newJob) {
-        logger.info("Creating Job...");
-        logger.info(newJob.toString());
         return jobService.createJob(customerId, newJob);
     }
 
 
     @PutMapping("/job/{id}")
-    public ResponseEntity<Job> updateJob(@PathVariable("id") Long id, @RequestBody Job updatedJob) {
-        logger.info("Updating JobId: " + id);
+    public ResponseEntity<Object> updateJob(@PathVariable("id") Long id, @RequestBody Job updatedJob) {
         return jobService.updateJob(id, updatedJob);
     }
 
 
     @DeleteMapping("/job/{id}")
-    public ResponseEntity<HttpStatus> deleteJob(@PathVariable("id") Long id) {
-        logger.info("Deleting JobId: " + id);
+    public ResponseEntity<Object> deleteJob(@PathVariable("id") Long id) {
         return jobService.deleteJob(id);
     }
 
 
     @DeleteMapping("/customer/{customerId}/jobs")
-    public ResponseEntity<List<Job>> deleteAllJobsOfCustomer(@PathVariable(value = "customerId") Long customerId) {
-        logger.info("Deleting All Jobs for CustomerId: " + customerId);
+    public ResponseEntity<Object> deleteAllJobsOfCustomer(@PathVariable(value = "customerId") Long customerId) {
         return jobService.deleteAllJobsOfCustomer(customerId);
     }
 

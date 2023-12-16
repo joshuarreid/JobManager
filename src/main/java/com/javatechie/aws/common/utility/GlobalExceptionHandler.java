@@ -4,6 +4,7 @@ import com.javatechie.aws.common.exception.ApplicationException;
 import com.javatechie.aws.common.exception.ResourceNotFoundException;
 import com.javatechie.aws.common.exception.ValidationException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -27,6 +28,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             Error error = new Error();
             ApplicationException exception = (ApplicationException) ex;
             error.setCode(exception.getCode());
+            error.setMessage(exception.getMessage());
+            return ResponseHandler.generateErrorResponse(error, status);
+        }
+
+        else if (ex instanceof EmptyResultDataAccessException) {
+            status = HttpStatus.NOT_FOUND;
+            Error error = new Error();
+            EmptyResultDataAccessException exception = (EmptyResultDataAccessException) ex;
             error.setMessage(exception.getMessage());
             return ResponseHandler.generateErrorResponse(error, status);
         }
