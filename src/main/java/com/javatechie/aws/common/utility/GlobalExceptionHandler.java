@@ -54,6 +54,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             Error error = new Error();
             error.setCode(2000);
             error.setMessage(ex.getMessage());
+            error.setDetailedMessage(ex.getLocalizedMessage());
             return ResponseHandler.generateErrorResponse(error, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
