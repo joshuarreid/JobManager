@@ -51,6 +51,7 @@ public class Contact {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Customer customer;
 
+
     public String getImage() {
         return image;
     }
