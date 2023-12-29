@@ -1,6 +1,5 @@
 package com.javatechie.aws.common.filter;
 
-import com.javatechie.aws.Controller.CompanyController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;

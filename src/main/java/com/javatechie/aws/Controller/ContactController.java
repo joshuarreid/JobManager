@@ -6,10 +6,8 @@ import com.javatechie.aws.Service.ContactService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -49,7 +47,7 @@ public class ContactController {
 
     @PostMapping("/company/{companyId}/contacts")
     public ResponseEntity<Object> createContact(@PathVariable(value = "companyId") Long companyId,
-                                                 @RequestBody Contact newContact) {
+                                                @RequestBody Contact newContact) {
         return contactService.createContact(companyId, newContact);
     }
 
@@ -62,7 +60,7 @@ public class ContactController {
 
     @PutMapping("/customer/{customerId}/contacts")
     public ResponseEntity<Object> addContactToCustomer(@PathVariable(value = "customerId") Long customerId,
-                                              @RequestBody Contact newContact) {
+                                                       @RequestBody Contact newContact) {
         return contactService.addContactToCustomer(customerId, newContact);
     }
 

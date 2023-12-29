@@ -1,22 +1,21 @@
 package com.javatechie.aws.Service;
 
-import com.javatechie.aws.common.exception.ValidationException;
+import com.javatechie.aws.DAO.CompanyRepository;
+import com.javatechie.aws.Model.Company;
+import com.javatechie.aws.common.exception.ResourceNotFoundException;
 import com.javatechie.aws.common.utility.ResponseHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import com.javatechie.aws.common.exception.ResourceNotFoundException;
-import com.javatechie.aws.DAO.CompanyRepository;
-import com.javatechie.aws.Model.Company;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CompanyService
-{
+public class CompanyService {
     @Autowired
     CompanyRepository companyRepository;
 
@@ -32,10 +31,10 @@ public class CompanyService
 
 
     public ResponseEntity<Object> getCompanyById(long id) {
-            Company company = companyRepository.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException("company id does not exist: " + id));
-            logger.info(company.toString());
-            return ResponseHandler.generateResponse(company);
+        Company company = companyRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("company id does not exist: " + id));
+        logger.info(company.toString());
+        return ResponseHandler.generateResponse(company);
     }
 
 

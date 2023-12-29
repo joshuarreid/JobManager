@@ -1,6 +1,5 @@
 package com.javatechie.aws.DAO;
 
-import com.javatechie.aws.Model.Contact;
 import com.javatechie.aws.Model.Job;
 import com.javatechie.aws.common.Status;
 import org.springframework.data.repository.CrudRepository;
@@ -11,7 +10,7 @@ import java.util.List;
 
 
 @Repository
-public interface JobRepository extends CrudRepository<Job,Long> {
+public interface JobRepository extends CrudRepository<Job, Long> {
 
     List<Job> findByStatus(Status status);
 

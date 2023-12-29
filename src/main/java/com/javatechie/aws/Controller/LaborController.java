@@ -1,21 +1,13 @@
 package com.javatechie.aws.Controller;
 
-import com.amazonaws.services.secretsmanager.model.ResourceNotFoundException;
-import com.javatechie.aws.DAO.JobRepository;
-import com.javatechie.aws.DAO.LaborRepository;
 import com.javatechie.aws.Model.Labor;
-import com.javatechie.aws.Model.Order;
 import com.javatechie.aws.Service.LaborService;
-import com.javatechie.aws.common.ShipmentStatus;
 import com.javatechie.aws.common.Status;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -44,7 +36,7 @@ public class LaborController {
 
     @PostMapping("/job/{jobId}/labors")
     public ResponseEntity<Object> createLabor(@PathVariable(value = "jobId") Long jobId,
-                                             @RequestBody Labor newLabor) {
+                                              @RequestBody Labor newLabor) {
         return laborService.createLabor(jobId, newLabor);
     }
 
@@ -63,9 +55,6 @@ public class LaborController {
     public ResponseEntity<Object> deleteAllLaborsOfJob(@PathVariable(value = "jobId") Long jobId) {
         return laborService.deleteAllLaborsOfJob(jobId);
     }
-
-
-
 
 
 }

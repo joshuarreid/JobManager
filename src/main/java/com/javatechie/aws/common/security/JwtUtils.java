@@ -1,18 +1,15 @@
 package com.javatechie.aws.common.security;
 
 import io.jsonwebtoken.*;
-
-import java.security.Key;
-
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
-import com.javatechie.aws.common.filter.AuthTokenFilter;
-import org.springframework.security.core.Authentication;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import java.security.Key;
 import java.util.Date;
 
 @Component

@@ -1,16 +1,12 @@
 package com.javatechie.aws.Controller;
 
-import com.javatechie.aws.Model.Customer;
 import com.javatechie.aws.Model.Job;
 import com.javatechie.aws.Service.JobService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -38,7 +34,7 @@ public class JobController {
 
     @PostMapping("/customer/{customerId}/jobs")
     public ResponseEntity<Object> createJob(@PathVariable(value = "customerId") Long customerId,
-                                         @RequestBody Job newJob) {
+                                            @RequestBody Job newJob) {
         return jobService.createJob(customerId, newJob);
     }
 

@@ -1,7 +1,6 @@
 package com.javatechie.aws.common.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.javatechie.aws.common.filter.AuthTokenFilter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.MediaType;

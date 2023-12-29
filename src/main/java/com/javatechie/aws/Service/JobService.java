@@ -1,9 +1,9 @@
 package com.javatechie.aws.Service;
 
-import com.javatechie.aws.common.exception.ResourceNotFoundException;
 import com.javatechie.aws.DAO.CustomerRepository;
 import com.javatechie.aws.DAO.JobRepository;
 import com.javatechie.aws.Model.Job;
+import com.javatechie.aws.common.exception.ResourceNotFoundException;
 import com.javatechie.aws.common.utility.ResponseHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +55,6 @@ public class JobService {
         logger.info(job);
         return ResponseHandler.generateResponse(job);
     }
-
 
 
     public ResponseEntity<Object> updateJob(Long id, Job updatedJob) {

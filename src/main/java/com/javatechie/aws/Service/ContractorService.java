@@ -1,9 +1,9 @@
 package com.javatechie.aws.Service;
 
-import com.javatechie.aws.common.exception.ResourceNotFoundException;
-import com.javatechie.aws.DAO.*;
+import com.javatechie.aws.DAO.ContractorRepository;
+import com.javatechie.aws.DAO.LaborRepository;
 import com.javatechie.aws.Model.Contractor;
-import com.javatechie.aws.Model.Order;
+import com.javatechie.aws.common.exception.ResourceNotFoundException;
 import com.javatechie.aws.common.utility.ResponseHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,8 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ContractorService
-{
+public class ContractorService {
     @Autowired
     LaborRepository laborRepository;
 
@@ -51,7 +50,6 @@ public class ContractorService
         logger.info(contractor);
         return ResponseHandler.generateResponse(contractor);
     }
-
 
 
     public ResponseEntity<Object> updateContractor(long id, Contractor updatedContractor) {

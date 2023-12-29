@@ -1,6 +1,5 @@
 package com.javatechie.aws.common.interceptor;
 
-import com.javatechie.aws.Controller.CompanyController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -28,7 +27,6 @@ public class HttpInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object object, Exception exception) {
         logger.info("Response Status: " + response.getStatus());
     }
-
 
 
 }

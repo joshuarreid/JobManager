@@ -1,16 +1,12 @@
 package com.javatechie.aws.Controller;
 
 import com.javatechie.aws.Model.Expense;
-import com.javatechie.aws.Model.Order;
 import com.javatechie.aws.Service.ExpenseService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -34,7 +30,7 @@ public class ExpenseController {
 
     @PostMapping("/job/{jobId}/expenses")
     public ResponseEntity<Object> createExpense(@PathVariable(value = "jobId") Long jobId,
-                                             @RequestBody Expense newExpense) {
+                                                @RequestBody Expense newExpense) {
         return expenseService.createExpense(jobId, newExpense);
     }
 
@@ -53,9 +49,6 @@ public class ExpenseController {
     public ResponseEntity<Object> deleteAllExpensesOfJob(@PathVariable(value = "jobId") Long jobId) {
         return expenseService.deleteAllExpensesOfJob(jobId);
     }
-
-
-
 
 
 }

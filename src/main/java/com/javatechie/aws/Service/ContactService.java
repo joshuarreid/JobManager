@@ -1,27 +1,24 @@
 package com.javatechie.aws.Service;
 
-import com.javatechie.aws.common.exception.ResourceNotFoundException;
 import com.javatechie.aws.DAO.CompanyRepository;
 import com.javatechie.aws.DAO.ContactRepository;
 import com.javatechie.aws.DAO.CustomerRepository;
-import com.javatechie.aws.common.utility.ResponseHandler;
-import com.javatechie.aws.Model.Company;
 import com.javatechie.aws.Model.Contact;
 import com.javatechie.aws.Model.Customer;
+import com.javatechie.aws.common.exception.ResourceNotFoundException;
+import com.javatechie.aws.common.utility.ResponseHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ContactService
-{
+public class ContactService {
     @Autowired
     ContactRepository contactRepository;
 
@@ -32,7 +29,6 @@ public class ContactService
     CustomerRepository customerRepository;
 
     private static final Logger logger = LogManager.getLogger(ContactService.class);
-
 
 
     public ResponseEntity<Object> getAllContacts() {
@@ -81,7 +77,6 @@ public class ContactService
     }
 
 
-
     public ResponseEntity<Object> createContact(Long companyId, Contact newContact) {
         Contact contact = companyRepository.findById(companyId).map(company -> {
             newContact.setCompany(company);
@@ -92,12 +87,10 @@ public class ContactService
     }
 
 
-
     public ResponseEntity<Object> deleteAllContactsOfCompany(Long companyId) {
         contactRepository.deleteByCompanyId(companyId);
         return ResponseHandler.generateResponse(HttpStatus.OK);
     }
-
 
 
     public ResponseEntity<Object> addContactToCustomer(Long customerId, Contact newContact) {

@@ -17,7 +17,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -54,7 +53,6 @@ public class AuthService {
 
         return ResponseHandler.generateResponse(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
     }
-
 
 
     public ResponseEntity<Object> registerUser(SignupRequest signUpRequest) {

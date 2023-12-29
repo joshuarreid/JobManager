@@ -1,6 +1,5 @@
 package com.javatechie.aws.DAO;
 
-import com.javatechie.aws.Model.Job;
 import com.javatechie.aws.Model.Order;
 import com.javatechie.aws.common.ShipmentStatus;
 import org.springframework.data.repository.CrudRepository;
@@ -11,7 +10,7 @@ import java.util.List;
 
 
 @Repository
-public interface OrderRepository extends CrudRepository<Order,Long> {
+public interface OrderRepository extends CrudRepository<Order, Long> {
 
     List<Order> findByJobId(Long jobId);
 

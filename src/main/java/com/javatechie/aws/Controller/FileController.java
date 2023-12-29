@@ -1,17 +1,12 @@
 package com.javatechie.aws.Controller;
 
-import com.javatechie.aws.Model.Expense;
 import com.javatechie.aws.Model.File;
-import com.javatechie.aws.Service.ExpenseService;
 import com.javatechie.aws.Service.FileService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -50,9 +45,6 @@ public class FileController {
     public ResponseEntity<Object> deleteAllFilesOfJob(@PathVariable(value = "jobId") Long jobId) {
         return fileService.deleteAllFilesOfJob(jobId);
     }
-
-
-
 
 
 }

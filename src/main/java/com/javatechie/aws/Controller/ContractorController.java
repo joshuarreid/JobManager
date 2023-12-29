@@ -1,16 +1,12 @@
 package com.javatechie.aws.Controller;
 
 import com.javatechie.aws.Model.Contractor;
-import com.javatechie.aws.Model.Order;
 import com.javatechie.aws.Service.ContractorService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -34,7 +30,7 @@ public class ContractorController {
 
     @PostMapping("/labor/{laborId}/contractors")
     public ResponseEntity<Object> createContractor(@PathVariable(value = "laborId") Long laborId,
-                                                       @RequestBody Contractor newContractor) {
+                                                   @RequestBody Contractor newContractor) {
         return contractorService.createContractor(laborId, newContractor);
     }
 
@@ -53,9 +49,6 @@ public class ContractorController {
     public ResponseEntity<Object> deleteAllContractorsOfLabor(@PathVariable(value = "laborId") Long laborId) {
         return contractorService.deleteAllContractorsOfLabor(laborId);
     }
-
-
-
 
 
 }

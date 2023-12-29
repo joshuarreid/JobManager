@@ -1,11 +1,9 @@
 package com.javatechie.aws.Service;
 
-import com.javatechie.aws.common.exception.ResourceNotFoundException;
-import com.javatechie.aws.DAO.ExpenseRepository;
 import com.javatechie.aws.DAO.FileRepository;
 import com.javatechie.aws.DAO.JobRepository;
-import com.javatechie.aws.Model.Expense;
 import com.javatechie.aws.Model.File;
+import com.javatechie.aws.common.exception.ResourceNotFoundException;
 import com.javatechie.aws.common.utility.ResponseHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
