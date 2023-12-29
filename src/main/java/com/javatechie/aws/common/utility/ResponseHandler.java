@@ -24,6 +24,12 @@ public class ResponseHandler {
         map.put("error", responseObj);
         return new ResponseEntity<Object>(map, status);
     }
+
+    public static ResponseEntity<Object> generateErrorResponse(Object responseObj) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("error", responseObj);
+        return new ResponseEntity<Object>(map, HttpStatus.BAD_REQUEST);
+    }
 }
 
 
