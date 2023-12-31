@@ -1,11 +1,14 @@
 package com.javatechie.aws.common.security;
 
+import com.javatechie.aws.common.config.ConfigProperties;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -16,14 +19,15 @@ import java.util.Date;
 public class JwtUtils {
     private static final Logger logger = LogManager.getLogger(JwtUtils.class);
 
-    @Value("${jwt.secret}")
     private String jwtSecret;
 
-    @Value("${jwt.expiration}")
-    private int jwtExpirationMs;
+    private int jwtExpirationMs = 86400000;
+
+    @Autowired
+    ConfigProperties configProp;
+
 
     public String generateJwtToken(Authentication authentication) {
-
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
         return Jwts.builder()
@@ -35,6 +39,7 @@ public class JwtUtils {
     }
 
     private Key key() {
+        jwtSecret = configProp.getConfigValue("jwt.secret");
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
