@@ -3,6 +3,8 @@ package com.javatechie.aws.common.config;
 import com.javatechie.aws.common.filter.AuthTokenFilter;
 import com.javatechie.aws.common.security.AuthEntryPointJwt;
 import com.javatechie.aws.common.security.UserDetailsServiceImpl;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +18,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.crypto.SecretKey;
 
 @Configuration
 @EnableWebSecurity
@@ -50,6 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
