@@ -21,7 +21,13 @@ public class HttpFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
-        logger.info("Incoming request: " + httpRequest.getMethod() + " " + httpRequest.getRequestURI());
+        String username = "";
+        try {
+            if (httpRequest.getHeader("username") != null)
+            username = httpRequest.getHeader("username");
+        } catch (Exception e){}
+
+        logger.info("Incoming request: " + username + " " + httpRequest.getMethod() + " " + httpRequest.getRequestURI());
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
